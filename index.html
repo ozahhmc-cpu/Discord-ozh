@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ozh Mc - المركز الرسمي</title>
+    <!-- استيراد خط القاهرة الحديث -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -23,7 +24,7 @@
             padding-bottom: 50px;
         }
 
-        /* شريط البث مخفي افتراضياً display: none */
+        /* شريط البث المباشر (مخفي افتراضياً display: none) */
         .live-banner {
             width: 100%;
             background: linear-gradient(90deg, #ff0055, #ff5500);
@@ -33,7 +34,7 @@
             font-weight: 700;
             font-size: 1rem;
             box-shadow: 0 0 20px rgba(255, 0, 85, 0.5);
-            display: none; /* 🔴 مخفي ولا يظهر إلا عند تفعيله */
+            display: none; /* يظهر تلقائياً عند وجود نشاط في القناة الصوتية */
             justify-content: center;
             align-items: center;
             gap: 10px;
@@ -54,6 +55,7 @@
             50% { opacity: 0.4; }
         }
 
+        /* الحاوية الرئيسية */
         .container {
             max-width: 900px;
             width: 92%;
@@ -63,6 +65,7 @@
             gap: 25px;
         }
 
+        /* الكارت الرئيسي */
         .hero-card {
             background: linear-gradient(145deg, #161b26, #10141d);
             border-radius: 20px;
@@ -70,6 +73,19 @@
             text-align: center;
             border: 1px solid rgba(88, 101, 242, 0.2);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(88,101,242,0.1) 0%, transparent 70%);
+            pointer-events: none;
         }
 
         .server-title {
@@ -77,6 +93,7 @@
             font-weight: 900;
             color: #5865F2;
             margin-bottom: 8px;
+            text-shadow: 0 0 15px rgba(88,101,242,0.4);
         }
 
         .server-desc {
@@ -114,6 +131,7 @@
             box-shadow: 0 0 8px #23a55a;
         }
 
+        /* الأزرار */
         .btn-group {
             display: flex;
             justify-content: center;
@@ -128,16 +146,42 @@
             font-weight: 700;
             font-size: 0.95rem;
             transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn-discord {
             background-color: #5865F2;
             color: white;
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+        }
+
+        .btn-discord:hover {
+            background-color: #4752C4;
+            transform: translateY(-3px);
         }
 
         .btn-store {
             background-color: #f1c40f;
             color: #000;
+            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.3);
+        }
+
+        .btn-store:hover {
+            background-color: #d4ac0d;
+            transform: translateY(-3px);
+        }
+
+        /* شبكة الأقسام والتحديثات */
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
         }
 
         .updates-grid {
@@ -151,11 +195,15 @@
             border-radius: 14px;
             padding: 20px;
             border-right: 4px solid #5865F2;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-left: 1px solid rgba(255,255,255,0.05);
         }
 
         .update-header {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin-bottom: 10px;
         }
 
@@ -167,31 +215,46 @@
             font-size: 0.8rem;
             font-weight: 700;
         }
+
+        .update-date {
+            color: #6c7280;
+            font-size: 0.8rem;
+        }
+
+        .update-card p {
+            color: #c2c7d0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
 
-    <!-- شريط الإيفينت المباشر (مخفي حالياً) -->
+    <!-- شريط البث/الأحداث المباشرة -->
     <div id="liveBanner" class="live-banner">
         <span class="live-badge">LIVE ●</span>
-        <span id="eventText">هناك حدث مباشر شغال الآن في السيرفر!</span>
+        <span>هناك حدث / فعالية مباشرة شغالة الآن في الديسكورد! انضم لـ المشاركة</span>
     </div>
 
     <div class="container">
         
+        <!-- الكارت الرئيسي -->
         <div class="hero-card">
             <h1 class="server-title" id="serverName">Ozh Mc Server</h1>
-            <p class="server-desc">أهلاً بكم في مجتمعنا! تابع آخر التحديثات، الفعاليات المباشرة، وانضم إلينا في سيرفر الديسكورد.</p>
+            <p class="server-desc">أهلاً بكم في مجتمعنا! تابع آخر التحديثات والفعاليات المباشرة، وانضم إلينا في سيرفر الديسكورد.</p>
             
             <div class="stats-container">
                 <div class="stat-box">
                     <span class="status-dot"></span>
                     <span>المتواجدون الآن: <strong id="onlineCount" style="color: #23a55a;">--</strong></span>
                 </div>
+                <div class="stat-box">
+                    <span>🎮 السيرفر: <strong>ماين كرافت</strong></span>
+                </div>
             </div>
 
             <div class="btn-group">
-                <a id="joinBtn" href="#" target="_blank" class="btn btn-discord">
+                <a id="joinBtn" href="https://discord.gg/vPSUBd7CY" target="_blank" class="btn btn-discord">
                     💬 انضم للديسكورد
                 </a>
                 <a href="https://discord.gg/vPSUBd7CY" target="_blank" class="btn btn-store">
@@ -200,15 +263,30 @@
             </div>
         </div>
 
+        <!-- قسم التحديثات والأخبار -->
         <div>
-            <h3 style="margin-bottom: 15px;">📢 الأخبار والتحديثات</h3>
+            <div class="section-title">
+                📢 آخر التحديثات والأخبار
+            </div>
+            
             <div class="updates-grid">
+                
                 <div class="update-card">
                     <div class="update-header">
-                        <span class="update-tag">تحديث</span>
+                        <span class="update-tag">تحديث السيرفر</span>
+                        <span class="update-date">الآن</span>
                     </div>
-                    <p>مرحباً بكم في موقع السيرفر الرسمي! يتم إظهار حالة البث والحدث المباشر هنا فور بدئه.</p>
+                    <p>🔥 تم إطلاق الموقع الرسمي وتفعيل نظام كشف الإيفينتات المباشرة والأعضاء أونلاين تلقائياً!</p>
                 </div>
+
+                <div class="update-card" style="border-right-color: #f1c40f;">
+                    <div class="update-header">
+                        <span class="update-tag" style="background: rgba(241, 196, 15, 0.2); color: #f1c40f;">متجر السيرفر</span>
+                        <span class="update-date">مفعل</span>
+                    </div>
+                    <p>⚔️ لشراء الرتب والأدوات من المتجر، قم بفتح تكت (Ticket) عبر الديسكورد الخاص بنا وسيتم إجابتك فوراً.</p>
+                </div>
+
             </div>
         </div>
 
@@ -222,20 +300,24 @@
                 const response = await fetch(`https://discord.com/api/guilds/${SERVER_ID}/widget.json`);
                 if (response.ok) {
                     const data = await response.json();
+                    
+                    // 1. تحديث اسم السيرفر والأعضاء والرابط
                     document.getElementById('serverName').innerText = data.name;
                     document.getElementById('onlineCount').innerText = data.presence_count;
                     if (data.instant_invite) {
                         document.getElementById('joinBtn').href = data.instant_invite;
                     }
 
-                    // التثبت من وجود صالة صوتية/إيفينت نشط
+                    // 2. التحكم بظهور وإخفاء شريط الـ LIVE
                     const liveBanner = document.getElementById('liveBanner');
                     
-                    // إذا كان هناك أحدهم في قناة Stage/Event
-                    if (data.members && data.members.some(m => m.suppressor === false || m.channel_id)) {
-                        liveBanner.style.display = 'flex';
+                    // إذا كان هناك أي عضو داخل روم صوتي/Stage
+                    const hasLiveActivity = data.members && data.members.some(m => m.channel_id !== undefined || m.speaker === true);
+
+                    if (hasLiveActivity) {
+                        liveBanner.style.display = 'flex'; // إظهار الشريط
                     } else {
-                        liveBanner.style.display = 'none'; // يبقى مخفياً إذا لا يوجد إيفينت
+                        liveBanner.style.display = 'none';  // إخفاء الشريط
                     }
                 }
             } catch (error) {
@@ -243,8 +325,11 @@
             }
         }
 
+        // تشغيل الفحص عند فتح الصفحة
         fetchDiscordData();
-        setInterval(fetchDiscordData, 15000); // يفحص كل 15 ثانية
+        
+        // إعادة الفحص التلقائي كل 10 ثوانٍ
+        setInterval(fetchDiscordData, 10000);
     </script>
 </body>
 </html>
