@@ -1,169 +1,318 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مركز التحديثات والفعاليات - Ozh Mc</title>
-<style>
-* {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ozh Mc - المركز الرسمي</title>
+    <!-- استيراد خط تجاري حديث -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
 
-body {
-background-color: #0f1117;
-color: #ffffff;
-display: flex;
-flex-direction: column;
-align-items: center;
-min-height: 100vh;
-}
+        body {
+            background-color: #0b0e14;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
 
-/* شريط الـ LIVE العلوي /
-.live-banner {
-width: 100%;
-background: linear-gradient(90deg, #ff0055, #ff5500);
-color: white;
-text-align: center;
-padding: 12px;
-font-weight: bold;
-font-size: 1.1rem;
-display: none; / يظهر فقط عند وجود بث أو حدث */
-box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
-animation: pulse 2s infinite;
-}
+        /* شريط البث المباشر / الإيفينت */
+        .live-banner {
+            width: 100%;
+            background: linear-gradient(90deg, #ff0055, #ff5500);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
 
-@keyframes pulse {
-0% { opacity: 0.9; }
-50% { opacity: 1; }
-100% { opacity: 0.9; }
-}
+        .live-badge {
+            background: #fff;
+            color: #ff0055;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-weight: 900;
+            font-size: 0.8rem;
+            animation: blink 1.5s infinite;
+        }
 
-.dot {
-height: 10px;
-width: 10px;
-background-color: #fff;
-border-radius: 50%;
-display: inline-block;
-margin-left: 8px;
-}
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
 
-/* الحاوية الرئيسية */
-.container {
-max-width: 800px;
-width: 90%;
-margin-top: 40px;
-text-align: center;
-}
+        /* الحاوية الرئيسية */
+        .container {
+            max-width: 900px;
+            width: 92%;
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
 
-.card {
-background-color: #1a1d26;
-border-radius: 12px;
-padding: 25px;
-margin-bottom: 25px;
-border: 1px solid #2d3243;
-box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-}
+        /* كارت معلومات السيرفر الرئيسي */
+        .hero-card {
+            background: linear-gradient(145deg, #161b26, #10141d);
+            border-radius: 20px;
+            padding: 35px 20px;
+            text-align: center;
+            border: 1px solid rgba(88, 101, 242, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
 
-h1 { margin-bottom: 10px; color: #5865F2; }
-p { color: #a3a8b7; line-height: 1.6; }
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(88,101,242,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
 
-.stats {
-display: flex;
-justify-content: center;
-gap: 20px;
-margin-top: 15px;
-}
+        .server-title {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #5865F2;
+            margin-bottom: 8px;
+            text-shadow: 0 0 15px rgba(88,101,242,0.4);
+        }
 
-.stat-badge {
-background: #232733;
-padding: 8px 16px;
-border-radius: 20px;
-font-size: 0.9rem;
-color: #43b581;
-}
+        .server-desc {
+            color: #9ba1b0;
+            font-size: 0.95rem;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
 
-/* زر الانضمام */
-.btn-discord {
-display: inline-block;
-background-color: #5865F2;
-color: white;
-padding: 12px 30px;
-border-radius: 8px;
-text-decoration: none;
-font-weight: bold;
-margin-top: 15px;
-transition: 0.3s;
-}
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
 
-.btn-discord:hover {
-background-color: #4752C4;
-transform: translateY(-2px);
-}
-</style>
+        .stat-box {
+            background: #1e2538;
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #23a55a;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #23a55a;
+        }
+
+        /* الأزرار الرئيسية */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-discord {
+            background-color: #5865F2;
+            color: white;
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+        }
+
+        .btn-discord:hover {
+            background-color: #4752C4;
+            transform: translateY(-3px);
+        }
+
+        .btn-store {
+            background-color: #f1c40f;
+            color: #000;
+            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.3);
+        }
+
+        .btn-store:hover {
+            background-color: #d4ac0d;
+            transform: translateY(-3px);
+        }
+
+        /* شبكة الأقسام والتحديثات */
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+        }
+
+        .updates-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .update-card {
+            background-color: #141824;
+            border-radius: 14px;
+            padding: 20px;
+            border-right: 4px solid #5865F2;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-left: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .update-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .update-tag {
+            background: rgba(88, 101, 242, 0.2);
+            color: #5865F2;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .update-date {
+            color: #6c7280;
+            font-size: 0.8rem;
+        }
+
+        .update-card p {
+            color: #c2c7d0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+    </style>
 </head>
 <body>
 
-<!-- شريط البث/الأحداث المباشرة -->
-<div id="liveBanner" class="live-banner">
-<span class="dot"></span> <span id="eventTitle">مباشر الآن: هناك حدث شغال في السيرفر!</span>
-</div>
+    <!-- شريط الإيفينت / البث المباشر -->
+    <div class="live-banner">
+        <span class="live-badge">LIVE ●</span>
+        <span>حدث مباشر شغال الآن في سيرفر الديسكورد! انضم لـ المشاركة</span>
+    </div>
 
-<div class="container">
-<!-- معلومات السيرفر -->
-<div class="card">
-<h1 id="serverName">جاري تحميل بيانات السيرفر...</h1>
-<p>أهلاً بك! تابع كافة الأحداث والتحديثات المباشرة الخاصة بالسيرفر هنا.</p>
+    <div class="container">
+        
+        <!-- الكارت الرئيسي -->
+        <div class="hero-card">
+            <h1 class="server-title" id="serverName">Ozh Mc Server</h1>
+            <p class="server-desc">أهلاً بكم في مجتمعنا! تابع آخر التحديثات، الفعاليات المباشرة، وانضم إلينا في سيرفر الديسكورد.</p>
+            
+            <div class="stats-container">
+                <div class="stat-box">
+                    <span class="status-dot"></span>
+                    <span>المتواجدون الآن: <strong id="onlineCount" style="color: #23a55a;">--</strong></span>
+                </div>
+                <div class="stat-box">
+                    <span>🎮 السيرفر: <strong>ماين كرافت</strong></span>
+                </div>
+            </div>
 
-<div class="stats">
-<span class="stat-badge">🟢 المتواجدون الآن: <strong id="onlineCount">0</strong></span>
-</div>
+            <div class="btn-group">
+                <a id="joinBtn" href="#" target="_blank" class="btn btn-discord">
+                    💬 انضم للديسكورد
+                </a>
+                <a href="https://discord.gg/vPSUBd7CY" target="_blank" class="btn btn-store">
+                    🛒 الدعم والمتجر (Tickets)
+                </a>
+            </div>
+        </div>
 
-<a id="joinBtn" href="#" target="_blank" class="btn-discord">دخول السيرفر</a>
-</div>
+        <!-- قسم التحديثات -->
+        <div>
+            <div class="section-title">
+                📢 آخر التحديثات والأخبار
+            </div>
+            
+            <div class="updates-grid">
+                
+                <div class="update-card">
+                    <div class="update-header">
+                        <span class="update-tag">تحديث جديد</span>
+                        <span class="update-date">اليوم</span>
+                    </div>
+                    <p>🔥 تم تفعيل نظام الـ Webhooks وإمكانية متابعة الإيفينتات المباشرة والتحديثات من الموقع مباشرة!</p>
+                </div>
 
-<!-- قسم التحديثات -->
-<div class="card" style="text-align: right;">
-<h2>📢 التحديثات والأخبار</h2>
-<hr style="border-color: #2d3243; margin: 15px 0;">
-<div id="updatesList">
-<p>💡 يتم تحديث هذه الصفحة تلقائياً لمتابعة حالة السيرفر والأحداث المباشرة.</p>
-</div>
-</div>
-</div>
+                <div class="update-card" style="border-right-color: #f1c40f;">
+                    <div class="update-header">
+                        <span class="update-tag" style="background: rgba(241, 196, 15, 0.2); color: #f1c40f;">متجر السيرفر</span>
+                        <span class="update-date">مفعل</span>
+                    </div>
+                    <p>⚔️ لشراء الأدوات الخاصة والعناصر من المتجر، قم بفتح تكت (Ticket) في مجتمع الديسكورد لخدمتك فوراً.</p>
+                </div>
 
-<script>
-const SERVER_ID = "1528910750238638180";
+            </div>
+        </div>
 
-async function fetchDiscordData() {
-try {
-// جلب بيانات السيرفر مباشرة من Discord Widget API
-const response = await fetch(https://discord.com/api/guilds/${SERVER_ID}/widget.json);
+    </div>
 
-if (!response.ok) {
-throw new Error("تأكد من تفعيل ميزة Enable Server Widget في إعدادات السيرفر");
-}
+    <script>
+        const SERVER_ID = "1528910750238638180"; 
 
-const data = await response.json();
+        async function fetchDiscordData() {
+            try {
+                const response = await fetch(`https://discord.com/api/guilds/${SERVER_ID}/widget.json`);
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('serverName').innerText = data.name;
+                    document.getElementById('onlineCount').innerText = data.presence_count;
+                    if (data.instant_invite) {
+                        document.getElementById('joinBtn').href = data.instant_invite;
+                    }
+                }
+            } catch (error) {
+                console.error("خطأ في جلب البيانات:", error);
+            }
+        }
 
-// تحديث اسم السيرفر والأعضاء والرابط
-document.getElementById('serverName').innerText = data.name;
-document.getElementById('onlineCount').innerText = data.presence_count;
-document.getElementById('joinBtn').href = data.instant_invite || "#";
-
-} catch (error) {
-console.error("خطأ في جلب البيانات:", error);
-document.getElementById('serverName').innerText = "سيرفر الديسكورد";
-}
-}
-
-// تشغيل جلب البيانات عند فتح الصفحة
-fetchDiscordData();
-
-// إعادة فحص التحديثات كل 30 ثانية أوتوماتيكياً
-setInterval(fetchDiscordData, 30000);
-</script>
+        fetchDiscordData();
+        setInterval(fetchDiscordData, 30000);
+    </script>
 </body>
 </html>
